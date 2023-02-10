@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:share_post/const/app_colors.dart';
 import 'package:share_post/const/app_textstyle.dart';
+import 'package:share_post/const/auth_const.dart';
 import 'package:share_post/controllers/get_posts_controller.dart';
 
 class PostWidget extends StatelessWidget {
@@ -87,11 +88,13 @@ class PostWidget extends StatelessWidget {
                                 onTap: () {
                                   controller.giveLike(docs.id);
                                 },
-                                child: const Icon(
-                                  Icons.arrow_upward,
-                                  size: 32,
-                                  color: AppColors.secondary,
-                                ),
+                                child: Icon(Icons.arrow_upward,
+                                    size: 32,
+                                    color: snapshot.data!.docs.every(
+                                            // ignore: unrelated_type_equality_checks
+                                            (element) => element == user!.uid)
+                                        ? AppColors.grey
+                                        : AppColors.secondary),
                               ),
                               Text(
                                 '${snapshot.data!.docs.length}',
@@ -115,11 +118,13 @@ class PostWidget extends StatelessWidget {
                                 onTap: () {
                                   controller.giveDisLike(docs.id);
                                 },
-                                child: Icon(
-                                  Icons.arrow_downward,
-                                  size: 32,
-                                  color: AppColors.grey,
-                                ),
+                                child: Icon(Icons.arrow_downward,
+                                    size: 32,
+                                    color: snapshot.data!.docs.every(
+                                            // ignore: unrelated_type_equality_checks
+                                            (element) => element == user!.uid)
+                                        ? AppColors.grey
+                                        : AppColors.secondary),
                               ),
                               Text(
                                 '${snapshot.data!.docs.length}',

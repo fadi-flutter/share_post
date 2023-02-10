@@ -77,7 +77,7 @@ class AuthController extends GetxController {
           idToken: googleSignInAuthentication.idToken,
           accessToken: googleSignInAuthentication.accessToken,
         );
-        await firebaseAuth
+        await FirebaseAuth.instance
             .signInWithCredential(authCredential)
             .then((value) async {
           await firebaseFirestore

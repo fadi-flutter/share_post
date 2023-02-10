@@ -14,7 +14,8 @@ class GetPostsController extends GetxController {
         .collection(collectionPosts)
         .doc(id)
         .collection(collectionLikes)
-        .add({
+        .doc(user!.uid)
+        .set({
       'user_id': user!.uid,
     });
   }
@@ -24,7 +25,8 @@ class GetPostsController extends GetxController {
         .collection(collectionPosts)
         .doc(id)
         .collection(collectionDislikes)
-        .add({
+        .doc(user!.uid)
+        .set({
       'user_id': user!.uid,
     });
   }
@@ -36,6 +38,7 @@ class GetPostsController extends GetxController {
         .collection(collectionLikes)
         .snapshots();
   }
+
   getDisLikes(String id) {
     return firebaseFirestore
         .collection(collectionPosts)
