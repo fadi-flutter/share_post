@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_post/const/app_colors.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:share_post/const/auth_const.dart';
 import 'package:share_post/views/screens/login_screen.dart';
+import 'package:share_post/views/screens/posts_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
   runApp(const MyApp());
 }
 
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: AppColors.primarySwatch,
       ),
-      home: LoginScreen(),
+      
+      home: user == null? LoginScreen():PostsScreen()
     );
   }
 }

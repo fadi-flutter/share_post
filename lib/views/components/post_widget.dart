@@ -1,14 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:share_post/const/app_colors.dart';
 import 'package:share_post/const/app_textstyle.dart';
 import 'package:share_post/const/auth_const.dart';
 import 'package:share_post/controllers/get_posts_controller.dart';
+import 'package:share_post/models/get_posts_model.dart';
 
 class PostWidget extends StatelessWidget {
-  const PostWidget({super.key, required this.docs, required this.controller});
-  final DocumentSnapshot docs;
+  PostWidget({super.key, required this.controller, required this.post});
   final GetPostsController controller;
+  final GetPostModel post;
+  final doc = firebaseFirestore.collection(collectionPosts);
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -51,11 +52,11 @@ class PostWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        docs['user_name'],
+                        post.userName,
                         style: AppTextStyle.mediumBlack14,
                       ),
                       Text(
-                        docs['created_at'],
+                        post.createdAt,
                         style: AppTextStyle.regularBlack12
                             .copyWith(color: AppColors.grey),
                       ),
@@ -67,7 +68,7 @@ class PostWidget extends StatelessWidget {
                 height: 20,
               ),
               Text(
-                docs['description'],
+                post.description,
                 style: AppTextStyle.regularBlack14,
               ),
             ],
@@ -78,63 +79,48 @@ class PostWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              StreamBuilder(
-                  stream: controller.getLikes(docs.id),
-                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                    return snapshot.hasData
-                        ? Column(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  controller.giveLike(docs.id);
-                                },
-                                child: Icon(Icons.arrow_upward,
-                                    size: 32,
-                                    color: snapshot.data!.docs.every(
-                                            // ignore: unrelated_type_equality_checks
-                                            (element) => element == user!.uid)
-                                        ? AppColors.grey
-                                        : AppColors.secondary),
-                              ),
-                              Text(
-                                '${snapshot.data!.docs.length}',
-                                style: AppTextStyle.mediumBlack12
-                                    .copyWith(color: AppColors.grey),
-                              ),
-                            ],
-                          )
-                        : const Center(child: CircularProgressIndicator());
-                  }),
+              Column(
+                children: [
+                  GestureDetector(
+                      onTap: () {
+                        controller.handelLikes(post);
+                      },
+                      child: Icon(Icons.arrow_upward,
+                          size: 32,
+                          color: post.likes.contains(user!.uid)
+                              ? AppColors.secondary
+                              : AppColors.grey)),
+                  //likes
+                  Text(
+                    post.likes.length.toString(),
+                    style: AppTextStyle.mediumBlack12
+                        .copyWith(color: AppColors.grey),
+                  ),
+                ],
+              ),
               const SizedBox(
                 width: 14,
               ),
-              StreamBuilder(
-                  stream: controller.getDisLikes(docs.id),
-                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                    return snapshot.hasData
-                        ? Column(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  controller.giveDisLike(docs.id);
-                                },
-                                child: Icon(Icons.arrow_downward,
-                                    size: 32,
-                                    color: snapshot.data!.docs.every(
-                                            // ignore: unrelated_type_equality_checks
-                                            (element) => element == user!.uid)
-                                        ? AppColors.grey
-                                        : AppColors.secondary),
-                              ),
-                              Text(
-                                '${snapshot.data!.docs.length}',
-                                style: AppTextStyle.mediumBlack12
-                                    .copyWith(color: AppColors.grey),
-                              ),
-                            ],
-                          )
-                        : const Center(child: CircularProgressIndicator());
-                  }),
+              Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      controller.handelDisLikes(post);
+                    },
+                    child: Icon(Icons.arrow_downward,
+                        size: 32,
+                        color: post.disLikes.contains(user!.uid)
+                            ? AppColors.secondary
+                            : AppColors.grey),
+                  ),
+                  //dislikes
+                  Text(
+                    post.disLikes.length.toString(),
+                    style: AppTextStyle.mediumBlack12
+                        .copyWith(color: AppColors.grey),
+                  ),
+                ],
+              )
             ],
           ),
         ],

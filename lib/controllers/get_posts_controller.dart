@@ -1,49 +1,53 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:share_post/const/auth_const.dart';
+import 'package:share_post/models/get_posts_model.dart';
 
 class GetPostsController extends GetxController {
-  getPosts() {
-    return firebaseFirestore
-        .collection(collectionPosts)
-        .orderBy('created_at', descending: true)
-        .snapshots();
+  var postsList = <GetPostModel>[].obs;
+  final doc = firebaseFirestore.collection(collectionPosts);
+
+  Stream<List<GetPostModel>> getPosts() {
+    return doc.orderBy('created_at', descending: true).snapshots().map(
+        (querySnap) =>
+            querySnap.docs.map((doc) => GetPostModel.fromMap(doc)).toList());
   }
 
-  giveLike(String id) async {
-    await firebaseFirestore
-        .collection(collectionPosts)
-        .doc(id)
-        .collection(collectionLikes)
-        .doc(user!.uid)
-        .set({
-      'user_id': user!.uid,
-    });
+  handelLikes(GetPostModel post) {
+    if (post.likes.contains(user!.uid)) {
+      doc.doc(post.id).update({
+        'likes': FieldValue.arrayRemove([user!.uid])
+      });
+    } else if (post.disLikes.contains(user!.uid)) {
+      doc.doc(post.id).update({
+        'dislikes': FieldValue.arrayRemove([user!.uid])
+      });
+      doc.doc(post.id).update({
+        'likes': FieldValue.arrayUnion([user!.uid])
+      });
+    } else {
+      doc.doc(post.id).update({
+        'likes': FieldValue.arrayUnion([user!.uid])
+      });
+    }
   }
 
-  giveDisLike(String id) async {
-    await firebaseFirestore
-        .collection(collectionPosts)
-        .doc(id)
-        .collection(collectionDislikes)
-        .doc(user!.uid)
-        .set({
-      'user_id': user!.uid,
-    });
-  }
-
-  getLikes(String id) {
-    return firebaseFirestore
-        .collection(collectionPosts)
-        .doc(id)
-        .collection(collectionLikes)
-        .snapshots();
-  }
-
-  getDisLikes(String id) {
-    return firebaseFirestore
-        .collection(collectionPosts)
-        .doc(id)
-        .collection(collectionDislikes)
-        .snapshots();
+  handelDisLikes(GetPostModel post) {
+    if (post.disLikes.contains(user!.uid)) {
+      doc.doc(post.id).update({
+        'dislikes': FieldValue.arrayRemove([user!.uid])
+      });
+    } else if (post.likes.contains(user!.uid)) {
+      doc.doc(post.id).update({
+        'likes': FieldValue.arrayRemove([user!.uid])
+      });
+      doc.doc(post.id).update({
+        'dislikes': FieldValue.arrayUnion([user!.uid])
+      });
+    } else {
+      doc.doc(post.id).update({
+        'dislikes': FieldValue.arrayUnion([user!.uid])
+      });
+    }
   }
 }

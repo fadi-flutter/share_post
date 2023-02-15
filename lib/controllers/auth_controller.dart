@@ -80,15 +80,17 @@ class AuthController extends GetxController {
         await FirebaseAuth.instance
             .signInWithCredential(authCredential)
             .then((value) async {
-          await firebaseFirestore
-              .collection(collectionUsers)
-              .doc(user!.uid)
-              .set({
-            'created_at': DateTime.now(),
-            'id': value.user!.uid,
-            'name': value.user!.displayName,
-            'email': value.user!.email,
-          });
+          if (user != null) {
+            await firebaseFirestore
+                .collection(collectionUsers)
+                .doc(user!.uid)
+                .set({
+              'created_at': DateTime.now(),
+              'id': value.user!.uid,
+              'name': value.user!.displayName,
+              'email': value.user!.email,
+            });
+          }
         }).then(
           (value) => Get.offAll(() => PostsScreen()),
         );
@@ -110,22 +112,10 @@ class AuthController extends GetxController {
     }
   }
 
-  checkUser() {
-    if (user != null) {
-      Get.offAll(() => PostsScreen());
-    }
-  }
-
   rawSnackbar(String title) {
     Get.rawSnackbar(
       message: title,
       backgroundColor: AppColors.black,
     );
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-    checkUser();
   }
 }

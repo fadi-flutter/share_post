@@ -13,6 +13,8 @@ class AddPostController extends GetxController {
       'user_id': user!.uid,
       'user_name': user!.displayName,
       'description': descriptionC.text,
+      'likes': [],
+      'dislikes': [],
     }).then((value) {
       descriptionC.clear();
       Get.back();

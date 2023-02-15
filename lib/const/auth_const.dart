@@ -6,5 +6,3 @@ FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 User? user = firebaseAuth.currentUser;
 const String collectionUsers = 'users';
 const String collectionPosts = 'Posts';
-const String collectionLikes = 'likes';
-const String collectionDislikes = 'dislikes';
