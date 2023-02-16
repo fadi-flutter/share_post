@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:share_post/const/app_colors.dart';
 import 'package:share_post/const/auth_const.dart';
-import 'package:share_post/views/screens/login_screen.dart';
-import '../views/screens/posts_screen.dart';
+import 'package:share_post/views/screens/auth/login_screen.dart';
+import 'package:share_post/views/screens/posts/posts_screen.dart';
 
 class AuthController extends GetxController {
   //shared pref

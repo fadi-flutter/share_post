@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:share_post/const/app_colors.dart';
+import 'package:share_post/const/app_textstyle.dart';
 import 'package:share_post/controllers/auth_controller.dart';
-import 'package:share_post/views/screens/forget_password_screen.dart';
-import 'package:share_post/views/screens/register_screen.dart';
-import '../../const/app_colors.dart';
-import '../../const/app_textstyle.dart';
-import '../components/app_button.dart';
-import '../components/app_textfield.dart';
+import 'package:share_post/views/components/app_button.dart';
+import 'package:share_post/views/components/app_textfield.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
-
-  var authController = Get.put(AuthController());
+class RegisterScreen extends StatelessWidget {
+  RegisterScreen({super.key});
+  var authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +36,7 @@ class LoginScreen extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      'Please enter your email address\nand enter password',
+                      'Please enter your email address\nand create password',
                       textAlign: TextAlign.center,
                       style: AppTextStyle.regularBlack16
                           .copyWith(color: AppColors.grey),
@@ -54,8 +51,19 @@ class LoginScreen extends StatelessWidget {
                         children: [
                           AppTextField(
                             width: width,
-                            controller: controller.emailC,
-                            leading: Icons.message,
+                            controller: controller.nameCR,
+                            leading: Icons.account_box,
+                            inputType: TextInputType.emailAddress,
+                            inputAction: TextInputAction.next,
+                            hint: 'Enter your full name',
+                          ),
+                          SizedBox(
+                            height: height * 0.03,
+                          ),
+                          AppTextField(
+                            width: width,
+                            controller: controller.emailCR,
+                            leading: Icons.email,
                             inputType: TextInputType.emailAddress,
                             inputAction: TextInputAction.next,
                             hint: 'Enter your email',
@@ -65,7 +73,7 @@ class LoginScreen extends StatelessWidget {
                           ),
                           AppTextField(
                             width: width,
-                            controller: controller.passwordC,
+                            controller: controller.passwordCR,
                             onTrailingTap: () {
                               controller.showPassword.value
                                   ? controller.showPassword(false)
@@ -81,9 +89,6 @@ class LoginScreen extends StatelessWidget {
                             inputAction: TextInputAction.done,
                             hint: 'Enter your password',
                           ),
-                          SizedBox(
-                            height: height * 0.07,
-                          ),
                         ],
                       ),
                     ),
@@ -91,39 +96,32 @@ class LoginScreen extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              Get.to(() => ForgetPassword());
-                            },
-                            child: Text(
-                              'Forgot Password?',
-                              style: AppTextStyle.boldBlack14
-                                  .copyWith(color: AppColors.primary),
-                            ),
+                          const SizedBox(
+                            height: 22,
                           ),
                           AppButton(
                             width: width * 0.6,
                             height: 65,
-                            text: 'Login',
+                            text: 'Sign Up',
                             onTap: () async {
-                              await controller.loginWithEmail();
-                              controller.rawSnackbar('Logged In');
+                              await controller.signinWithEmail();
+                              controller.rawSnackbar('Signed In');
                             },
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Don\'t have an account? ',
+                                'Already have an account? ',
                                 style: AppTextStyle.regularBlack14
                                     .copyWith(color: AppColors.grey),
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Get.to(() => RegisterScreen());
+                                  Get.back();
                                 },
                                 child: Text(
-                                  'Sign Up',
+                                  'Login',
                                   style: AppTextStyle.boldBlack14
                                       .copyWith(color: AppColors.primary),
                                 ),
@@ -158,7 +156,7 @@ class LoginScreen extends StatelessWidget {
                           GestureDetector(
                             onTap: () async {
                               await controller.signinWithGoogle();
-                              controller.rawSnackbar('Logged In');
+                              controller.rawSnackbar('Signed In');
                             },
                             child: Container(
                               height: 60,

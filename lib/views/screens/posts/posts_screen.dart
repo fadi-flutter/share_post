@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:share_post/controllers/get_posts_controller.dart';
+import 'package:share_post/const/app_colors.dart';
+import 'package:share_post/const/app_textstyle.dart';
+import 'package:share_post/controllers/posts_controller.dart';
 import 'package:share_post/models/get_posts.dart';
 import 'package:share_post/views/components/post_widget.dart';
-import '../../const/app_colors.dart';
-import '../../const/app_textstyle.dart';
-import '../components/simple_textfield.dart';
+import 'package:share_post/views/components/simple_textfield.dart';
 import 'add_post_screen.dart';
 
 class PostsScreen extends StatelessWidget {
   PostsScreen({super.key});
-  var controller = Get.put(GetPostsController());
+  var controller = Get.put(PostsController());
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class PostsScreen extends StatelessWidget {
               style: AppTextStyle.regularWhite18,
             ),
           ),
-          body: GetX<GetPostsController>(builder: (controller) {
+          body: GetX<PostsController>(builder: (controller) {
             return Column(
               children: [
                 Container(

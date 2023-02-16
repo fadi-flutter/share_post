@@ -2,12 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:share_post/const/app_colors.dart';
+import 'package:share_post/const/app_textstyle.dart';
 import 'package:share_post/controllers/auth_controller.dart';
+import 'package:share_post/views/components/app_button.dart';
+import 'package:share_post/views/components/app_textfield.dart';
 
-import '../../const/app_colors.dart';
-import '../../const/app_textstyle.dart';
-import '../components/app_button.dart';
-import '../components/app_textfield.dart';
 
 class ForgetPassword extends StatelessWidget {
   ForgetPassword({super.key});

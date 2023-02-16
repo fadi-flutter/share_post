@@ -142,4 +142,33 @@ static TextStyle regularWhite8 =
   static TextStyle regularWhite30 =
       GoogleFonts.poppins(fontSize: 30, color: AppColors.white, fontWeight: FontWeight.w400);
 
+// Bold White Styles
+
+  static TextStyle boldWhite8 = GoogleFonts.poppins(fontSize: 8, color: AppColors.white, fontWeight: FontWeight.w600);
+
+  static TextStyle boldWhite10 = GoogleFonts.poppins(fontSize: 10, color: AppColors.white, fontWeight: FontWeight.w600);
+
+  static TextStyle boldWhite12 = GoogleFonts.poppins(fontSize: 12, color: AppColors.white, fontWeight: FontWeight.w600);
+
+  static TextStyle boldWhite14 = GoogleFonts.poppins(fontSize: 14, color: AppColors.white, fontWeight: FontWeight.w600);
+
+  static TextStyle boldWhite16 = GoogleFonts.poppins(fontSize: 16, color: AppColors.white, fontWeight: FontWeight.w600);
+
+  static TextStyle boldWhite18 = GoogleFonts.poppins(fontSize: 18, color: AppColors.white, fontWeight: FontWeight.w600);
+
+  static TextStyle boldWhite20 = GoogleFonts.poppins(fontSize: 20, color: AppColors.white, fontWeight: FontWeight.w600);
+
+  static TextStyle boldWhite22 = GoogleFonts.poppins(fontSize: 22, color: AppColors.white, fontWeight: FontWeight.w600);
+
+  static TextStyle boldWhite24 = GoogleFonts.poppins(fontSize: 24, color: AppColors.white, fontWeight: FontWeight.w600);
+
+  static TextStyle boldWhite26 = GoogleFonts.poppins(fontSize: 26, color: AppColors.white, fontWeight: FontWeight.w600);
+
+  static TextStyle boldwhite28 = GoogleFonts.poppins(fontSize: 28, color: AppColors.white, fontWeight: FontWeight.w600);
+
+  static TextStyle boldwhite30 = GoogleFonts.poppins(fontSize: 30, color: AppColors.white, fontWeight: FontWeight.w600);
+
+
+
+
 }

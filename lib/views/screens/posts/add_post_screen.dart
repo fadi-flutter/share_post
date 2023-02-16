@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:share_post/controllers/add_post_controller.dart';
-import '../../const/app_colors.dart';
-import '../../const/app_textstyle.dart';
-import '../components/material_button.dart';
+import 'package:share_post/const/app_colors.dart';
+import 'package:share_post/const/app_textstyle.dart';
+import 'package:share_post/controllers/posts_controller.dart';
+import 'package:share_post/views/components/material_button.dart';
 
 class createPostWidget extends StatelessWidget {
   createPostWidget({super.key});
-  var addpostController = Get.put(AddPostController());
+  var addpostController = Get.put(PostsController());
   @override
   Widget build(BuildContext context) {
     final sizew = MediaQuery.of(context).size.width * 1;
