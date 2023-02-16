@@ -1,16 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:share_post/const/auth_const.dart';
-import 'package:share_post/models/get_posts_model.dart';
+import 'package:share_post/models/get_posts.dart';
 
 class GetPostsController extends GetxController {
-  var postsList = <GetPostModel>[].obs;
+  final TextEditingController searchC = TextEditingController();
+  RxBool fieldEnabled = false.obs;
+  RxInt sortIndex = 0.obs;
   final doc = firebaseFirestore.collection(collectionPosts);
 
-  Stream<List<GetPostModel>> getPosts() {
-    return doc.orderBy('created_at', descending: true).snapshots().map(
+  Stream<List<GetPostModel>> getAllPosts() {
+    return doc.orderBy('created_at', descending: false).snapshots().map(
         (querySnap) =>
             querySnap.docs.map((doc) => GetPostModel.fromMap(doc)).toList());
+  }
+
+  Stream<List<GetPostModel>> getMyPosts() {
+    return doc
+        .orderBy('created_at', descending: false)
+        .where('user_id', isEqualTo: user!.uid)
+        .snapshots()
+        .map((querySnap) => querySnap.docs.map((doc) => GetPostModel.fromMap(doc)).toList());
   }
 
   handelLikes(GetPostModel post) {

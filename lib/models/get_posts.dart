@@ -25,13 +25,4 @@ class GetPostModel {
       likes: List.from(data['likes']),
     );
   }
-
-  Map<String, dynamic> toMap() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['created_at'] = createdAt;
-    data['description'] = description;
-    data['user_id'] = userID;
-    data['user_name'] = userName;
-    return data;
-  }
 }

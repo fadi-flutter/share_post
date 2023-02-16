@@ -1,15 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:share_post/const/app_colors.dart';
 import 'package:share_post/const/app_textstyle.dart';
 import 'package:share_post/const/auth_const.dart';
 import 'package:share_post/controllers/get_posts_controller.dart';
-import 'package:share_post/models/get_posts_model.dart';
+import 'package:share_post/models/get_posts.dart';
 
 class PostWidget extends StatelessWidget {
   PostWidget({super.key, required this.controller, required this.post});
   final GetPostsController controller;
   final GetPostModel post;
   final doc = firebaseFirestore.collection(collectionPosts);
+  User? user = firebaseAuth.currentUser;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
