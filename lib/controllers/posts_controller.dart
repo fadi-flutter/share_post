@@ -10,6 +10,7 @@ class PostsController extends GetxController {
   RxBool fieldEnabled = false.obs;
   RxInt sortIndex = 0.obs;
   final doc = firebaseFirestore.collection(collectionPosts);
+  final userUid = firebaseAuth.currentUser!.uid;
 
   final descriptionC = TextEditingController();
   RxString time = ''.obs;
@@ -18,7 +19,7 @@ class PostsController extends GetxController {
     await firebaseFirestore.collection(collectionPosts).add({
       'time_stamp': DateTime.now(),
       'created_at': time.value,
-      'user_id': user!.uid,
+      'user_id': userUid,
       'user_name': user!.displayName,
       'description': descriptionC.text,
       'likes': [],
@@ -50,39 +51,39 @@ class PostsController extends GetxController {
   }
 
   handelLikes(GetPostModel post) {
-    if (post.likes.contains(user!.uid)) {
+    if (post.likes.contains(userUid)) {
       doc.doc(post.id).update({
-        'likes': FieldValue.arrayRemove([user!.uid])
+        'likes': FieldValue.arrayRemove([userUid])
       });
-    } else if (post.disLikes.contains(user!.uid)) {
+    } else if (post.disLikes.contains(userUid)) {
       doc.doc(post.id).update({
-        'dislikes': FieldValue.arrayRemove([user!.uid])
+        'dislikes': FieldValue.arrayRemove([userUid])
       });
       doc.doc(post.id).update({
-        'likes': FieldValue.arrayUnion([user!.uid])
+        'likes': FieldValue.arrayUnion([userUid])
       });
     } else {
       doc.doc(post.id).update({
-        'likes': FieldValue.arrayUnion([user!.uid])
+        'likes': FieldValue.arrayUnion([userUid])
       });
     }
   }
 
   handelDisLikes(GetPostModel post) {
-    if (post.disLikes.contains(user!.uid)) {
+    if (post.disLikes.contains(userUid)) {
       doc.doc(post.id).update({
-        'dislikes': FieldValue.arrayRemove([user!.uid])
+        'dislikes': FieldValue.arrayRemove([userUid])
       });
-    } else if (post.likes.contains(user!.uid)) {
+    } else if (post.likes.contains(userUid)) {
       doc.doc(post.id).update({
-        'likes': FieldValue.arrayRemove([user!.uid])
+        'likes': FieldValue.arrayRemove([userUid])
       });
       doc.doc(post.id).update({
-        'dislikes': FieldValue.arrayUnion([user!.uid])
+        'dislikes': FieldValue.arrayUnion([userUid])
       });
     } else {
       doc.doc(post.id).update({
-        'dislikes': FieldValue.arrayUnion([user!.uid])
+        'dislikes': FieldValue.arrayUnion([userUid])
       });
     }
   }

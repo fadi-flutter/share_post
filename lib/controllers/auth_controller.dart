@@ -6,6 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:share_post/const/app_colors.dart';
 import 'package:share_post/const/auth_const.dart';
 import 'package:share_post/views/screens/auth/login_screen.dart';
+import 'package:share_post/views/screens/dashboard.dart';
 import 'package:share_post/views/screens/posts/posts_screen.dart';
 
 class AuthController extends GetxController {
@@ -92,7 +93,7 @@ class AuthController extends GetxController {
             });
           }
         }).then(
-          (value) => Get.offAll(() => PostsScreen()),
+          (value) => Get.offAll(() => const Dashboard()),
         );
         isLoading(false);
       }

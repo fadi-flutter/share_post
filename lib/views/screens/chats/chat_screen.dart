@@ -13,19 +13,23 @@ class ChatScreen extends StatelessWidget {
   final ChatController chatC = Get.put(ChatController());
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.black,
-      appBar: AppBar(
-        centerTitle: true,
-        elevation: 0,
-        title: Text(friendName, style: AppTextStyle.boldWhite18),
-        leading: BackButton(
-          onPressed: () {
-            Get.back();
-          },
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.black,
+        appBar: AppBar(
+          centerTitle: true,
+          elevation: 0,
+          title: Text(friendName, style: AppTextStyle.boldWhite18),
+          leading: BackButton(
+            onPressed: () {
+              Get.back();
+            },
+          ),
         ),
-      ),
-      body: Container(
+        body: Container(
           decoration: const BoxDecoration(
               color: AppColors.white,
               borderRadius: BorderRadius.only(
@@ -84,7 +88,9 @@ class ChatScreen extends StatelessWidget {
                 ],
               );
             },
-          )),
+          ),
+        ),
+      ),
     );
   }
 }

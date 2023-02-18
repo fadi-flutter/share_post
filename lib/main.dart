@@ -4,8 +4,7 @@ import 'package:share_post/const/app_colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:share_post/const/auth_const.dart';
 import 'package:share_post/views/screens/auth/login_screen.dart';
-
-import 'views/screens/dashboard.dart';
+import 'package:share_post/views/screens/dashboard.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -7,7 +7,8 @@ import 'package:share_post/const/auth_const.dart';
 import 'package:share_post/views/screens/chats/chat_screen.dart';
 
 class AllUsersScreen extends StatelessWidget {
-  const AllUsersScreen({super.key});
+   AllUsersScreen({super.key});
+  final userUid = firebaseAuth.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class AllUsersScreen extends StatelessWidget {
               child: StreamBuilder(
                 stream: firebaseFirestore
                     .collection(collectionUsers)
-                    .where('id', isNotEqualTo: user!.uid)
+                    .where('id', isNotEqualTo: userUid)
                     .snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   return snapshot.hasData

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:share_post/const/app_colors.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:share_post/views/screens/chats/all_user_screen.dart';
+import 'package:share_post/views/screens/info_screen.dart';
 import 'package:share_post/views/screens/posts/posts_screen.dart';
+import 'package:share_post/views/screens/profile_screen.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -15,9 +17,9 @@ class _DashboardState extends State<Dashboard> {
   int index = 0;
   List pages = [
     PostsScreen(),
-     AllUsersScreen()
-    // Forum(),
-    //  Profile(),
+    AllUsersScreen(),
+    const InfoScreen(),
+    const ProfileScreen()
   ];
   @override
   Widget build(BuildContext context) {
